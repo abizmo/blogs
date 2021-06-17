@@ -13,10 +13,10 @@ const initialBlogs = [{
 },
 ];
 
+const aBlog = initialBlogs[0];
 const anotherBlog = {
   title: 'Type wars', author: 'Robert C. Martin', url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
 };
-
 const wrongBlog = {};
 
 const dbInit = async () => {
@@ -43,5 +43,5 @@ const nonExistingId = async () => {
 };
 
 module.exports = {
-  anotherBlog, blogsInDb, dbInit, initialLength, nonExistingId, wrongBlog,
+  aBlog, anotherBlog, blogsInDb, dbInit, initialLength, nonExistingId, wrongBlog,
 };
