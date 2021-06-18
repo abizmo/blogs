@@ -1,6 +1,6 @@
 const ERROR_NAMES_MAP = {
   CastError: (res) => res.status(400).send({ error: 'Invalid ID' }),
-  ValidationError: (res) => res.status(400).send({ error: 'Title and URL have to be defined' }),
+  ValidationError: (res) => res.status(400).send({ error: 'Invalid data sent' }),
 };
 
 // eslint-disable-next-line no-unused-vars

@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const errorHandler = require('./middleware/errorHandler');
 const blogsRoutes = require('./routes/blogs');
 const config = require('./utils/config');
+const usersRoutes = require('./routes/users');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/blogs', blogsRoutes);
+app.use('/api/users', usersRoutes);
 app.use(errorHandler);
 
 module.exports = app;

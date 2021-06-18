@@ -21,7 +21,7 @@ describe('when there is initially some blogs saved', () => {
   test('there are two blogs', async () => {
     const response = await api.get('/api/blogs');
 
-    expect(response.body).toHaveLength(helper.initialLength());
+    expect(response.body).toHaveLength(helper.blogsLength());
   });
 
   test('each blog has id', async () => {
@@ -49,7 +49,7 @@ describe('addition of a new blog', () => {
     const response = await api.get('/api/blogs');
     const titles = response.body.map(({ title }) => title);
 
-    expect(response.body).toHaveLength(helper.initialLength() + 1);
+    expect(response.body).toHaveLength(helper.blogsLength() + 1);
     expect(titles).toContain(helper.anotherBlog.title);
   });
 
@@ -145,7 +145,7 @@ describe('update of a blog', () => {
 
     const getResponse = await api.get('/api/blogs');
     const titles = getResponse.body.map(({ title }) => title);
-    expect(getResponse.body).toHaveLength(helper.initialLength());
+    expect(getResponse.body).toHaveLength(helper.blogsLength());
     expect(titles).toContain('New Title');
   });
 
@@ -190,7 +190,7 @@ describe('modify likes in a blog', () => {
 
     const getResponse = await api.get('/api/blogs');
     const likesArray = getResponse.body.map(({ likes }) => likes);
-    expect(getResponse.body).toHaveLength(helper.initialLength());
+    expect(getResponse.body).toHaveLength(helper.blogsLength());
     expect(likesArray).toContain(700);
   });
 
@@ -204,7 +204,7 @@ describe('modify likes in a blog', () => {
 
     const getResponse = await api.get('/api/blogs');
     const likesArray = getResponse.body.map(({ likes }) => likes);
-    expect(getResponse.body).toHaveLength(helper.initialLength());
+    expect(getResponse.body).toHaveLength(helper.blogsLength());
     expect(likesArray).not.toContain(700);
   });
 
@@ -218,7 +218,7 @@ describe('modify likes in a blog', () => {
 
     const getResponse = await api.get('/api/blogs');
     const likesArray = getResponse.body.map(({ likes }) => likes);
-    expect(getResponse.body).toHaveLength(helper.initialLength());
+    expect(getResponse.body).toHaveLength(helper.blogsLength());
     expect(likesArray).not.toContain(700);
   });
 });
