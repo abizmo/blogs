@@ -5,7 +5,13 @@ const User = require('../models/user');
 const { SALT_ROUNDS } = require('../utils/config');
 
 router.get('/', async (req, res) => {
-  const users = await User.find({});
+  const users = await User
+    .find({})
+    .populate('blogs', {
+      author: 1,
+      title: 1,
+      url: 1,
+    });
 
   return res.status(200).json(users);
 });
