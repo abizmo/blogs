@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const jwt = require('jsonwebtoken');
 
+const { SECRET } = require('../utils/config');
 const Blog = require('../models/blog');
 const User = require('../models/user');
 
@@ -15,11 +17,16 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  const { token } = req;
+  if (!token) return res.status(401).json({ error: 'token missing or invalid' });
+  const { id } = jwt.verify(token, SECRET);
+  if (!id) return res.status(401).json({ error: 'token missing or invalid' });
+
   const { body } = req;
-  const user = await User.findOne({});
+  const user = await User.findById(id);
 
   // eslint-disable-next-line no-underscore-dangle
-  const blog = new Blog({ ...body, user: user._id });
+  const blog = new Blog({ ...body, user: id });
   const savedBlog = await blog.save();
   // eslint-disable-next-line no-underscore-dangle
   user.blogs.push(blog._id);

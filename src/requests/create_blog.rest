@@ -1,8 +1,9 @@
 POST http://localhost:3100/api/blogs HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Iml6aWQiLCJpZCI6IjYwY2RkMGEzMTUyOGI5MDE3ZTM1YTk4YSIsImlhdCI6MTYyNDExMTQzM30.yOTPP3kTu6hAxbjdZ6Fy69d0IL5tfFQksSUV7gCNE9k
 
 {
-  "title": "Second blog",
+  "title": "fourth blog",
   "author": "author 2",
   "url": "http://www.fullstackopen.com/",
   "likes": 3

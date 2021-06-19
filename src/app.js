@@ -4,6 +4,7 @@ require('express-async-errors');
 const mongoose = require('mongoose');
 
 const errorHandler = require('./middleware/errorHandler');
+const getTokenFrom = require('./middleware/getTokenFrom');
 const blogsRoutes = require('./routes/blogs');
 const loginRoutes = require('./routes/login');
 const config = require('./utils/config');
@@ -21,6 +22,7 @@ mongoose.connect(mongoUrl, {
 
 app.use(cors());
 app.use(express.json());
+app.use(getTokenFrom);
 
 app.use('/api/blogs', blogsRoutes);
 app.use('/api/login', loginRoutes);

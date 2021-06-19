@@ -1,6 +1,7 @@
 const ERROR_NAMES_MAP = {
   CastError: (res) => res.status(400).send({ error: 'Invalid ID' }),
   ValidationError: (res) => res.status(400).send({ error: 'Invalid data sent' }),
+  JsonWebTokenError: (res) => res.status(400).send({ error: 'Token missing or invalid' }),
 };
 
 // eslint-disable-next-line no-unused-vars
