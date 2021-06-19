@@ -44,10 +44,19 @@ router.get('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const blog = await Blog.findByIdAndRemove(id);
+  const { token } = req;
+  if (!token) return res.status(401).json({ error: 'token missing or invalid' });
 
+  const decodedToken = jwt.verify(token, SECRET);
+  if (!decodedToken.id) return res.status(401).json({ error: 'token missing or invalid' });
+
+  const { id } = req.params;
+  const blog = await Blog.findById(id);
   if (!blog) return res.status(404).end();
+
+  if (blog.user.toString() !== decodedToken.id.toString()) return res.status(401).send({ error: 'forbidden' });
+
+  await blog.remove();
   return res.status(204).end();
 });
 
