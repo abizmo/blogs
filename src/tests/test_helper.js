@@ -1,4 +1,7 @@
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+
+const { SECRET } = require('../utils/config');
 const Blog = require('../models/blog');
 const User = require('../models/user');
 
@@ -82,6 +85,17 @@ const nonExistingId = async () => {
   return newBlog._id.toString();
 };
 
+const createToken = async () => {
+  const user = await User.findOne({});
+  const userForToken = {
+    userName: user.userName,
+    // eslint-disable-next-line no-underscore-dangle
+    id: user._id,
+  };
+
+  return jwt.sign(userForToken, SECRET);
+};
+
 module.exports = {
   aBlog,
   anotherBlog,
@@ -97,4 +111,5 @@ module.exports = {
   wrongBlog,
   wrongUser,
   duplicatedUser,
+  createToken,
 };

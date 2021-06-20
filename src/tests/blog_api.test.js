@@ -40,8 +40,10 @@ describe('when there is initially some blogs saved', () => {
 
 describe('addition of a new blog', () => {
   test('when post a blog there is one more', async () => {
+    const token = `Bearer ${await helper.createToken()}`;
     await api
       .post('/api/blogs')
+      .set('Authorization', token)
       .send(helper.anotherBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/);
@@ -54,14 +56,20 @@ describe('addition of a new blog', () => {
   });
 
   test('if there is not likes, then likes eq 0', async () => {
-    const response = await api.post('/api/blogs').send(helper.anotherBlog);
+    const token = `Bearer ${await helper.createToken()}`;
+    const response = await api
+      .post('/api/blogs')
+      .set('Authorization', token)
+      .send(helper.anotherBlog);
     expect(response.body.likes).toBeDefined();
     expect(response.body.likes).toBe(0);
   });
 
   test('if ther is not title or url, then 400 - Bad Request', async () => {
+    const token = `Bearer ${await helper.createToken()}`;
     await api
       .post('/api/blogs')
+      .set('Authorization', token)
       .send(helper.wrongBlog)
       .expect(400);
   });
@@ -103,9 +111,11 @@ describe('deletion of a blog', () => {
   test('should succeed with status code 204 if id is valid', async () => {
     // eslint-disable-next-line no-unused-vars
     const [blogToDelete, ...rest] = await helper.blogsInDb();
+    const token = `Bearer ${await helper.createToken()}`;
 
     const response = await api
       .delete(`/api/blogs/${blogToDelete.id}`)
+      .set('Authorization', token)
       .expect(204);
 
     expect(response.body).toEqual({});
@@ -113,17 +123,21 @@ describe('deletion of a blog', () => {
 
   test('should fail with statuscode 404 if note does not exist', async () => {
     const nonExistingId = await helper.nonExistingId();
+    const token = `Bearer ${await helper.createToken()}`;
 
     await api
       .delete(`/api/blogs/${nonExistingId}`)
+      .set('Authorization', token)
       .expect(404);
   });
 
   test('should fail with statuscode 400 if id is invalid', async () => {
     const wrongId = `${await helper.nonExistingId()}invalid`;
+    const token = `Bearer ${await helper.createToken()}`;
 
     await api
       .delete(`/api/blogs/${wrongId}`)
+      .set('Authorization', token)
       .expect(400);
   });
 });
