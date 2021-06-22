@@ -37,13 +37,13 @@ describe('POST /api/users', () => {
       .expect('Content-Type', /application\/json/);
 
     const usersAtEnd = await helper.usersInDb();
-    const userNames = usersAtEnd.map(({ userName }) => userName);
+    const usernames = usersAtEnd.map(({ username }) => username);
 
     expect(usersAtEnd).toHaveLength(helper.usersLength() + 1);
-    expect(userNames).toContain(helper.anotherUser.userName);
+    expect(usernames).toContain(helper.anotherUser.username);
   });
 
-  test('should failed when no name, userName or password', async () => {
+  test('should failed when no name, username or password', async () => {
     await api
       .post('/api/users')
       .send(helper.wrongUser)
@@ -54,7 +54,7 @@ describe('POST /api/users', () => {
     expect(usersAtEnd).toHaveLength(helper.usersLength());
   });
 
-  test('should failed when userName is not unique', async () => {
+  test('should failed when username is not unique', async () => {
     const { body } = await api
       .post('/api/users')
       .send(helper.duplicatedUser)
@@ -67,10 +67,10 @@ describe('POST /api/users', () => {
     expect(usersAtEnd).toHaveLength(helper.usersLength());
   });
 
-  test('should failed when userName has length < 3', async () => {
+  test('should failed when username has length < 3', async () => {
     const { body } = await api
       .post('/api/users')
-      .send({ name: 'test', userName: 'te', password: 'test' })
+      .send({ name: 'test', username: 'te', password: 'test' })
       .expect(400)
       .expect('Content-Type', /application\/json/);
 
@@ -80,7 +80,7 @@ describe('POST /api/users', () => {
   test('should failed when password has length < 3', async () => {
     const { body } = await api
       .post('/api/users')
-      .send({ name: 'test', userName: 'test', password: 'te' })
+      .send({ name: 'test', username: 'test', password: 'te' })
       .expect(400)
       .expect('Content-Type', /application\/json/);
 

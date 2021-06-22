@@ -17,9 +17,9 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { name, password, userName } = req.body;
+  const { name, password, username } = req.body;
 
-  if (userName && userName.length < 3) {
+  if (username && username.length < 3) {
     const err = new Error('username is too short');
     err.name = 'ValidationError';
     throw err;
@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
   const user = new User({
     name,
     passwordHash,
-    userName,
+    username,
   });
 
   const savedUser = await user.save();

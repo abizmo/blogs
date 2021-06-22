@@ -21,24 +21,24 @@ const initialBlogs = [{
 const initialUser = {
   name: 'administrator',
   passwordHash: 'root',
-  userName: 'root',
+  username: 'root',
 };
 
 const anotherUser = {
   name: 'New User',
   password: 'newPassword',
-  userName: 'newUser',
+  username: 'newUser',
 };
 
 const duplicatedUser = {
   name: 'administrator',
   password: 'root',
-  userName: 'root',
+  username: 'root',
 };
 
 const wrongUser = {
   password: 'newPassword',
-  userName: 'newUser',
+  username: 'newUser',
 };
 
 const aBlog = initialBlogs[0];
@@ -88,7 +88,7 @@ const nonExistingId = async () => {
 const createToken = async () => {
   const user = await User.findOne({});
   const userForToken = {
-    userName: user.userName,
+    username: user.username,
     // eslint-disable-next-line no-underscore-dangle
     id: user._id,
   };

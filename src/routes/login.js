@@ -6,9 +6,9 @@ const { SECRET } = require('../utils/config');
 const User = require('../models/user');
 
 router.post('/', async (req, res) => {
-  const { userName, password } = req.body;
+  const { username, password } = req.body;
 
-  const user = await User.findOne({ userName });
+  const user = await User.findOne({ username });
   const isPasswordCorrect = user === null
     ? false
     : await bcrypt.compare(password, user.passwordHash);
@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
   }
 
   const userForToken = {
-    userName,
+    username,
     // eslint-disable-next-line no-underscore-dangle
     id: user._id,
   };
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
   return res.status(200)
     .send({
       token,
-      userName,
+      username,
       name: user.name,
     });
 });
