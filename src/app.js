@@ -22,10 +22,11 @@ mongoose.connect(mongoUrl, {
 
 app.use(cors());
 app.use(express.json());
-app.use(getTokenFrom);
 
-app.use('/api/blogs', blogsRoutes);
 app.use('/api/login', loginRoutes);
+
+app.use(getTokenFrom);
+app.use('/api/blogs', blogsRoutes);
 app.use('/api/users', usersRoutes);
 app.use(errorHandler);
 
